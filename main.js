@@ -1,99 +1,24 @@
+/// <reference types="jquery" />
+//@ts-check
+"use strict";
+
+/** @typedef {JQuery<HTMLElement>} JqueryElement */
+
+/** @typedef {JqueryElement & {refresh: () => void}} JqueryComponent */
 
 /**
- * @summary Maçon - Utility to create Jquery components with a JSX-like syntax
+ * @summary Maçon - Light utility to create Jquery components using a JSX-like syntax
  *
  * @description ES6 tagged template litteral that converts a string into a Jquery object.
  * The string's content must be valid HTML and have only one root element.
- * Obviously, this code requires jquery. If you want similar features for vanilla JS, use {@link https://github.com/terkelg/facon}.
- * This code can be very useful if you're working on a legacy jquery codebase and you want to use a component-based approach.
  *
  * Interpolated values are concatenated to the HTML code, like how a template litteral would behave.
  * However, if the interpolated value is a Jquery object, or an array of Jquery/DOM elements, the value is appended to the component's object model.
  * You can define reactive behaviors by passing functions as interpolated values. Calling component.refresh() function will re-execute these callbacks and update the component.
  * Do not put objects as interpolated values.
  *
- * @example // == Simple example ==
- *  $("body").append(HelloComponent({ name: "World" }));
- *
- *  // Gives :
- *  // <body><button type="button">Hello, World !</button></body>
- *
- *  function HelloComponent({name}) {
- *      const component = template`<button type="button">Hello, ${name} !</button>`;
- *      component.on("click", function(event){
- *           event.preventDefault()
- *           console.log("clicked !");
- *      });
- *      return component;
- *  }
- *
- * @example // == Advanced use ==
- * $("body").append(PageComponent());
- *
- * // Gives (when clicked two times):
- * // <main>
- * //     <h1>Static Items</h1>
- * //     <ul>
- * //         <li>Wheat</li><li>Eggs</li><li>Milk</li>
- * //     </ul>
- * //     <h1>Reactive Items</h1>
- * //     <ul>
- * //         <li>Wheat</li><li>Eggs</li><li>Milk</li><li>new item !</li><li>new item !</li>
- * //     </ul>
- * //     <h1>Child to parent communication</h1>
- * //         <button type="button" id="addBtn">add</button>
- * //     <h1>Parent to child communication</h1>
- * //         <button type="button" id="parentChild">I'm a button</button>
- * // </main>
- *
- * function PageComponent() {
- *     const items = ["Wheat", "Eggs", "Milk"];
- *     const component = template`
- *         <main>
- *             <h1>Static Items</h1>
- *             <ul>
- *                 ${items.map((item) => template`<li>${item}</li>`)}
- *             </ul>
- *             <h1>Reactive Items</h1>
- *             <ul>
- *                 ${() => {
- *                     if (items.length > 0) {
- *                         return items.map((item) => template`<li>${item}</li>`);
- *                     }
- *                     return "No items";
- *                 }}
- *             </ul>
- *             <h1>Child to parent communication</h1>
- *                 ${ButtonComponent({ text: "add", onclick: handleClick, id: "addBtn" })}
- *             <h1>Parent to child communication</h1>
- *                 ${ButtonComponent({ text: "will be changed", id: "parentChild" })}
- *         </main>
- *     `;
- *     component.find("#parentChild").trigger("custom:changeText", ["I'm a button"]);
- *     function handleClick() {
- *         items.push("new item !");
- *         component.refresh();
- *     }
- *     return component;
- * }
- * function ButtonComponent({ text, onclick, id }) {
- *     const component = template`<button type="button" ${id ? `id="${id}"` : ""}>${text}</button>`;
- *     // Child to parent
- *     component.on("click", (event) => {
- *         event.preventDefault();
- *         if (onclick) {
- *             onclick();
- *         }
- *     });
- *     // Parent to child (not recommanded)
- *     component.on("custom:changeText", (_event, data) => {
- *         component.text(data);
- *     });
- *     return component;
- * }
- *
- * @author LoganTann
- * @returns {jQuery & {refresh: () => void}}
+ * @author LoganTann <logon313@hotmail.fr>
+ * @returns {JqueryComponent}
  */
 function template(strings, ...args) {
     const references = new Map();
@@ -140,7 +65,8 @@ function template(strings, ...args) {
     }
     /**
      * Refreshs the component.
-     * Warning : Does not keep the current state.
+     * Please keep in mind that this will clear the element's children and attributes to replace them with interpolated values again.
+     * This mimics reactivity in a naive way and some features that relies on dom change, like css transitions and external event listeners assignment, won't apply.
      */
     function refresh() {
         const updatedComponent = buildComponent();
@@ -148,7 +74,6 @@ function template(strings, ...args) {
         componentInstance.empty().append(updatedChildren);
         copyAttributes(updatedComponent.get(0), componentInstance.get(0));
     }
-    componentInstance.refresh = refresh;
 
-    return componentInstance;
+    return Object.assign(componentInstance, { refresh });
 }
