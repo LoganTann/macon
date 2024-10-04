@@ -173,7 +173,7 @@ let myNode = document.createElement('div');
 let node = template`<div>${myNode}</div>`;
 ```
 
-### jQueryNode.refresh()
+### jQueryComponent.refresh()
 
 Method to refresh a component's state. 
 
