@@ -54,6 +54,8 @@ import { template } from "./macon.js";
 
 $("#anywhere").append(ShoppingListComponent());
 
+
+// is that event jquery ??
 function ShoppingListComponent() {
     const items = [["Wheat", true], ["Eggs", false], ["Milk", false]];
     return template`
