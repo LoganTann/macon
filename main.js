@@ -17,7 +17,6 @@
  * You can define reactive behaviors by passing functions as interpolated values. Calling component.refresh() function will re-execute these callbacks and update the component.
  * Do not put objects as interpolated values.
  *
- * @author LoganTann <logon313@hotmail.fr>
  * @returns {JqueryComponent}
  */
 function template(strings, ...args) {
