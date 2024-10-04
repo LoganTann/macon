@@ -17,6 +17,8 @@ Copy-paste the `template` function located in [main.js](./main.js).
 
 The framwework stands in a single function, as it is an ES6 tagged template processor.
 
+Minified and gzipped size is 430B. Although I suggest copy pasting the function with JSDoc comments so you can benefit from proper editor integration.
+
 ## Usage
 
 ### Just add `template` before your string, and the magic happens
