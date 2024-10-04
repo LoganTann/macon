@@ -185,3 +185,9 @@ Be aware that there is no Virtual DOM nor smart updates when calling `refresh()`
 
 The utility will naively delete the node's content, re-build the HTML and insert it. So using reactivity to use CSS transitions is not possible.
 
+
+## License
+
+MIT © [ShinProg](https://github.com/LoganTann)
+
+Inspired from the [terkelg/facon](https://github.com/terkelg/facon/) project, © [Terkel Gjervig](https://terkel.com)
