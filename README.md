@@ -155,11 +155,11 @@ Still, contributions are very welcome and I'll do my best to answer pull request
 
 ## API
 
-### JqueryComponent type definition
+### `JqueryComponent` type definition
 
 Return value of the template() function. Aliases to `JQuery<HTMLElement> & {refresh: () => void}`;
 
-### template`...string`
+### `template(...string)`
 
 Returns: `JqueryComponent`
 
@@ -179,13 +179,13 @@ let myNode = document.createElement('div');
 let node = template`<div>${myNode}</div>`;
 ```
 
-### jQueryComponent.refresh()
+### `JqueryComponent.refresh()`
 
 Method to refresh a component's state. 
 
 Be aware that there is no Virtual DOM nor smart updates when calling `refresh()`.
 
-The utility will naively delete the node's content, re-build the HTML and insert it. So using reactivity to use CSS transitions is not possible.
+The utility will naively delete the node's content, re-build the HTML and insert it. Therefore, using reactivity to use CSS transitions is not possible.
 
 
 ## License
