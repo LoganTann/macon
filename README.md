@@ -147,7 +147,9 @@ You can also use javascript proxies to detect mutations and call refresh() at th
 
 The name "Maçon" (which means "mason" or "builder" in French) is derived from the [façon library](https://github.com/terkelg/facon), which served as a source of inspiration for this project.
 
-This is an utility I created for my internship and I don't plan use my free time to add new features.
+This is an utility I created for my internship to solve a specific issue (convert an existing JQuery codebase MVVM architecture). It has been successfully used to develop a feature-rich MOOC platform.
+
+Given the professional context, I got the authorization to make it open-source, but I don't plan use my free time to add new features.
 
 Still, contributions are very welcome and I'll do my best to answer pull requests, especially if it's about adding CJS+ESM support, unit tests, CI and npm release.
 
@@ -157,7 +159,7 @@ Still, contributions are very welcome and I'll do my best to answer pull request
 
 Return value of the template() function. Aliases to `JQuery<HTMLElement> & {refresh: () => void}`;
 
-### template(string)
+### template`...string`
 
 Returns: `JqueryComponent`
 
